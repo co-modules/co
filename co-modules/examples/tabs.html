@@ -1,0 +1,366 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta charset="utf-8">
+    <title>Hello UI Tabs</title>
+    <!--demo展示所用css，不用关心 begin-->
+    <link rel="stylesheet" href="../co/css/co.css">
+    <link rel="stylesheet" type="text/css" href="../co/css/widgets/slider/slider.css" />
+   <style>
+            body {
+                font-family: ubuntu, helvetica, arial;
+            }
+            html,body {
+                background-color: #efeff4;
+            }
+            .title{
+                margin: 20px 15px 10px;
+                color: #6d6d72;
+                font-size: 15px;
+            }
+            
+            .oa-contact-cell.ui-table .ui-table-cell {
+                padding: 11px 0;
+                vertical-align: middle;
+            }
+            
+            .oa-contact-cell {
+                position: relative;
+                margin: -11px 0;
+            }
+    
+            .oa-contact-avatar {
+                width: 75px;
+            }
+            .oa-contact-avatar img {
+                border-radius: 50%;
+            }
+            .oa-contact-content {
+                width: 100%;
+            }
+            .oa-contact-name {
+                margin-right: 20px;
+            }
+            .oa-contact-name, oa-contact-position {
+                float: left;
+            }
+            /*.ui-bar-tab ~ .ui-content .ui-wrapper {
+                position: absolute;
+                z-index: 1;
+                top: 44px;
+                bottom: 50px;
+                width: 100%;
+                background: #ccc;
+            }*/
+           /* .ui-slider .ui-slider-group .ui-slider-item {
+                  position: relative;
+                  display: inline-block;
+                  width: 100%;
+                  font-size: 14px;
+                  vertical-align: top;
+                }*/
+        </style>
+</head>
+<body>  
+    <header class="ui-bar ui-bar-nav">
+        <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+        <h1 class="ui-title">选项卡（tabs）</h1>
+    </header>  
+    <div class="ui-content" id = "tabs1">
+        <nav class="ui-bar ui-bar-tab">
+            <a class="ui-tab-item" href="#slider">
+                <span class="ui-icon ui-icon-home"></span>
+                <span class="ui-tab-label">首页</span>
+            </a>
+            <a class="ui-tab-item" href="#wrapper">
+                <span class="ui-icon ui-icon-email"><span class="ui-badge">9</span></span>
+                <span class="ui-tab-label">消息</span>
+            </a>
+            <a class="ui-tab-item" href="#contact">
+                <span class="ui-icon ui-icon-contact"></span>
+                <span class="ui-tab-label">通讯录</span>
+            </a>
+            <a class="ui-tab-item" href="#contor">
+                <span class="ui-icon ui-icon-gear"></span>
+                <span class="ui-tab-label">设置</span>
+            </a>
+        </nav>
+            <div id="slider" class ="ui-control-content">
+            </div>
+            <div id="wrapper" class ="ui-control-content ui-wrapper">
+            </div>
+            <div id="contact" class ="ui-control-content ui-wrapper">
+            </div>
+            <div id="contor" class ="ui-control-content">
+                <ul class="ui-table-view">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            新消息通知
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            隐私
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            通用
+                        </a>
+                    </li>
+                </ul>
+                <ul class="ui-table-view" style="margin-top: 25px;">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            关于
+                        </a>
+                    </li>
+                </ul>
+                <ul class="ui-table-view" style="margin-top: 25px;">
+                    <li class="ui-table-view-cell">
+                        <a style="text-align: center;color: #FF3B30;">
+                            退出登录
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script src="../co/co.js"></script>
+</body>
+<script>
+    domReady(function(require){
+            require("tab");
+            require("gridview");
+            require("treeview");
+            require("slider");
+
+            $('a.ui-pull-left').button(function(evt){
+                    this.back();
+                })
+            $('#tabs1').tab();
+            $('#contor').treeview();
+            $('#tabs1').on('activate',function(evt,to){
+                    switch (to.id) {
+                        case 'wrapper':
+                            wrapper();
+                            break;
+                        case 'contact':
+                            contact();
+                            break;
+                    }
+            });
+             $('#slider').slider( { 
+                    loop:true,
+                    data:[{
+                        pic:'img/img1.png',
+                        title:'1,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'img/img2.png',
+                        title:'2,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'img/img3.png',
+                        title:'3,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'img/img4.png',
+                        title:'4,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    },{
+                        pic:'img/img5.png',
+                        title:'5,让Coron的太阳把自己晒黑—小天',
+                        href:'http://www.baidu.com/'
+                    }] 
+                });
+
+        var wrapper = function(){
+             var tplLeft = '<li class="ui-table-view-cell ui-media">'+
+                                '<a href="javascript:;">'+
+                                    '<img class="ui-media-object ui-pull-left" src="<%=src%>">'+
+                                    '<div class="ui-media-body">'+
+                                        '<%=cont%>'+
+                                        '<p class="ui-ellipsis"><%=text%></p>'+
+                                    '</div>'+
+                                '</a>'+
+                            '</li>';
+                
+
+                var data = [{
+                            src:'img/img1.png',
+                            cont:'远眺',
+                            text:'能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？'
+                        },{
+                            src:'img/img1.png',
+                            cont:'木屋',
+                            text:'想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        },{
+                            src:'img/img1.png',
+                            cont:'烤炉',
+                            text:'烤炉模式的城，到黄昏，如同打翻的调色盘一般.'
+                        }]          
+                $('#wrapper').gridview({
+                    tpl:{
+                        li: tplLeft 
+                    },
+                    data:data
+                });
+        }
+
+           
+        var contact = function(){
+                var tpluiR = '<li class="ui-table-view-cell">'+
+                                        '<div class="ui-table">'+
+                                            '<div class="ui-table-cell ui-col-xs-10">'+
+                                                '<h4 class="ui-ellipsis"><%=ellips%></h4>'+
+                                                '<h5><%=title%></h5>'+
+                                                '<p class="ui-h6 ui-ellipsis">'+
+                                                '<%=cont%>'+
+                                            '</div>'+
+                                            '<div class="ui-table-cell ui-col-xs-2 ui-text-right">'+
+                                                '<span class="ui-h5"><%=date%></span>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</li>';
+                    var ul = '<ul class="ui-table-view ui-table-view-striped ui-table-view-condensed">';
+                    var dataR = [{
+                                ellips:'信息化推进办公室张彦合同付款信息化',
+                                title:'申请人：李四',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            },{
+                                ellips:'信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款信息化推进办公室张彦合同付款',
+                                title:'申请人：張三',
+                                cont:'Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿',
+                                date:'12:25'
+                            }]; 
+                    $('#contact').gridview({
+                        tpl:{
+                            ul:ul,
+                            li: tpluiR 
+                        },
+                        data:dataR
+
+                    }); 
+        }
+    });
+</script>   
+</html>
