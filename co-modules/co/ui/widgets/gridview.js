@@ -79,6 +79,23 @@
 
         };
 
+        var bingSwipe = function(swipe){
+            var _gv = this,opts = _gv.opts;
+            var swipeouts = _gv.ref.find('.swipeout');
+            if(swipeouts.length>0){
+                swipe.initSwipe(_gv.ref);
+                swipeouts.find('.swipeout-delete').on(_gv.touchEve(),function(evt){
+                   var tar = $(this);
+                   swipe.swipeDelete(tar.parents('.swipeout'));
+                   // alert(tar);
+                   // if()
+                });
+                swipeouts.on('delete',function(e){
+                    // return false;
+                })
+            }
+        }
+
     define(function(require, exports, module) {
         var $ui = require("ui");
 
@@ -114,6 +131,9 @@
                     });
                 });
             }
+            require.async('swipeout', function(swipe) {
+                bingSwipe.call(_gv,swipe);
+            });
         };
         /**
          * 根據傳入數據渲染

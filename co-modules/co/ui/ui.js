@@ -79,6 +79,7 @@ define(function(require, exports, module) {
     return this.isTouchScreen()? "touchend touchmove" : "mouseup"
   };
 
+
   Base.log = function(str){
     console.log(str);
     return this;
@@ -150,38 +151,6 @@ define(function(require, exports, module) {
     };
     $ui.uuid = 0;
     $ui.data = {};
-    /**
-     * scrollTo
-     */
-    $ui.scrollTo = function(scrollTop, duration, callback) {
-        duration = duration || 1000;
-        var scroll = function(duration) {
-            if (duration <= 0) {
-                callback && callback();
-                return;
-            }
-            var distaince = scrollTop - window.scrollY;
-            setTimeout(function() {
-                window.scrollTo(0, window.scrollY + distaince / duration * 10);
-                scroll(duration - 10);
-            }, 16.7);
-        };
-        scroll(duration);
-    };
-    $ui.animationFrame = function(cb) {
-        var args, isQueued, context;
-        return function() {
-            args = arguments;
-            context = this;
-            if (!isQueued) {
-                isQueued = true;
-                requestAnimationFrame(function() {
-                    cb.apply(context, args);
-                    isQueued = false;
-                });
-            }
-        };
-    };
     //exports
     module.exports = $ui;
 

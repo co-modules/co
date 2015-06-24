@@ -2,8 +2,6 @@
  * switch组件
  */
 (function() {
-        var setTranslateX;
-
         var CLASS_SWITCH = 'ui-switch',
             CLASS_SWITCH_HANDLE = 'ui-switch-handle',
             CLASS_ACTIVE = 'ui-active',
@@ -109,6 +107,28 @@
             }
         };
 
+        var setTranslateX = $.animationFrame(function(x) {
+            var _tog = this, opts = _tog.opts,element = opts.ref,classList = element.classList;
+            if (!opts.isDragging) {
+                return;
+            }
+            var isChanged = false;
+            if ((opts.initialState && -x > (opts.handleX / 2)) || (!opts.initialState && x > (opts.handleX / 2))) {
+                isChanged = true;
+            }
+            if (opts.lastChanged !== isChanged) {
+                if (isChanged) {
+                    _tog._handle.style.webkitTransform = 'translate3d(' + (opts.initialState ? 0 : opts.handleX) + 'px,0,0)';
+                    classList[opts.initialState ? 'remove' : 'add'](CLASS_ACTIVE);
+                } else {
+                    _tog._handle.style.webkitTransform = 'translate3d(' + (opts.initialState ? opts.handleX : 0) + 'px,0,0)';
+                    classList[opts.initialState ? 'add' : 'remove'](CLASS_ACTIVE);
+                }
+                opts.lastChanged = isChanged;
+            }
+
+        });
+
         
 
     define(function(require, exports, module) {
@@ -134,28 +154,6 @@
             _tog.ref.trigger('toggle',[active]);
             return _tog;
         };
-
-        setTranslateX = $ui.animationFrame(function(x) {
-            var _tog = this, opts = _tog.opts,element = opts.ref,classList = element.classList;
-            if (!opts.isDragging) {
-                return;
-            }
-            var isChanged = false;
-            if ((opts.initialState && -x > (opts.handleX / 2)) || (!opts.initialState && x > (opts.handleX / 2))) {
-                isChanged = true;
-            }
-            if (opts.lastChanged !== isChanged) {
-                if (isChanged) {
-                    _tog._handle.style.webkitTransform = 'translate3d(' + (opts.initialState ? 0 : opts.handleX) + 'px,0,0)';
-                    classList[opts.initialState ? 'remove' : 'add'](CLASS_ACTIVE);
-                } else {
-                    _tog._handle.style.webkitTransform = 'translate3d(' + (opts.initialState ? opts.handleX : 0) + 'px,0,0)';
-                    classList[opts.initialState ? 'add' : 'remove'](CLASS_ACTIVE);
-                }
-                opts.lastChanged = isChanged;
-            }
-
-        });
         
         //注册$插件
         $.fn.switch = function(opts) {

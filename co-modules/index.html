@@ -29,10 +29,16 @@
     .ui-bar-nav.ui-bar .ui-icon {
 	   margin-right: 0px;
 	   margin-left: 0px;
-	}        
+	}     
+  .ios7 #header {
+    /*padding: 1em 0 0;*/
+  }   
+  .ios7 .ui-bar {
+    /* height: auto; */
+  }  
 </style>
 	</head>
-	<body>
+	<body class="ios7">
 			<header id="header" class="ui-bar ui-bar-nav">
           <h1 class="ui-title">UI Widgets</h1>
           <a class="ui-icon ui-icon-bars ui-pull-left"></a>
@@ -56,6 +62,32 @@
                    data:data
                 });
   })
+
+
+  var callback = {};
+  var guid = 0;
+  function a(fun){
+      callback[++guid] = fun;
+  }
+
+  function b(uid,ret){
+    var back = callback[uid];
+    callback[uid](ret);
+    delete back;
+  }
+
+  function c(){
+    var d = 111;
+    a(function(ret){
+        alert(d);
+        alert(ret);
+    })
+  }
+
+  c();
+  // setTimeout(function(){
+  //   b(guid,'callback');
+  // }, 2000);
    	
    </script>
 </html>

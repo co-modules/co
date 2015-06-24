@@ -3,9 +3,6 @@
 <head>
   <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
-    <meta name="apple-itunes-app" content="app-id=698076980" />
-    <meta name="Keywords" content="多玩游戏">
-    <meta name="description" content="">
     <title>Hello UI Input</title>
 
     <!-- Style -->
@@ -127,5 +124,10 @@
      <script src="../co/co.js"></script>
 </body>
      <script>
+        domReady(function(require){
+            $('a.ui-pull-left').button(function(el,evt){
+                this.back();
+            })
+      })
     </script>
 </html>
